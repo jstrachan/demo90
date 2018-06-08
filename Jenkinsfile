@@ -3,7 +3,6 @@ pipeline {
       label "jenkins-maven"
     }
     environment {
-      DOCKER_REGISTRY2   = "$JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST" + ":" + "$JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT"
       DHOST             = "${env.JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}"
       FOO               = "$JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST-$JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT"
       BAR               = "${env.JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:${env.JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT}"
@@ -45,7 +44,7 @@ pipeline {
         }
         steps {
           container('maven') {
-            sh "echo DOCKER_REGISTRY = $DOCKER_REGISTRY"
+            sh 'echo DOCKER_REGISTRY = $DOCKER_REGISTRY'
             sh "echo DHOST = $DHOST"
             sh "echo BAR = $BAR"
             sh "echo FOO = $FOO"
