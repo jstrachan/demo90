@@ -45,10 +45,10 @@ pipeline {
         steps {
           container('maven') {
             sh 'echo DOCKER_REGISTRY = $DOCKER_REGISTRY'
-            sh "echo DHOST = $DHOST"
-            sh "echo BAR = $BAR"
-            sh "echo FOO = $FOO"
-            sh "echo DOCKER_REGISTRY2 = $DOCKER_REGISTRY2"
+            sh 'echo DHOST = $DHOST'\
+            sh 'echo BAR = $BAR'
+            sh 'echo FOO = $FOO'
+            sh 'echo DOCKER_REGISTRY2 = $DOCKER_REGISTRY2'
               
             // ensure we're not on a detached head
             sh "git checkout master"
