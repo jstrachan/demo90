@@ -3,7 +3,7 @@ pipeline {
       label "jenkins-maven"
     }
     environment {
-      DOCKER_REGISTRY   = "${JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:${JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT}"
+      DOCKER_REGISTRY   = "${env.JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST}:${env.JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT}"
       ORG               = 'jstrachan'
       APP_NAME          = 'demo90'
       CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
@@ -73,27 +73,4 @@ pipeline {
         steps {
           dir ('./charts/demo90') {
             container('maven') {
-              sh 'jx step changelog --version v\$(cat ../../VERSION)'
-
-              // release the helm chart
-              sh 'make release'
-
-              // promote through all 'Auto' promotion Environments
-              sh 'jx promote -b --all-auto --timeout 1h --version \$(cat ../../VERSION)'
-            }
-          }
-        }
-      }
-    }
-    post {
-        always {
-            cleanWs()
-        }
-        failure {
-            input """Pipeline failed. 
-We will keep the build pod around to help you diagnose any failures. 
-
-Select Proceed or Abort to terminate the build pod"""
-        }
-    }
-  }
+              sh 'jx step changelog --version v
