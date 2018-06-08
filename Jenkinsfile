@@ -77,4 +77,26 @@ pipeline {
         steps {
           dir ('./charts/demo90') {
             container('maven') {
-              sh 'jx step changelog --version v
+              sh 'jx step changelog --version v\$(cat ../../VERSION)'
+
+              // release the helm chart
+              sh 'make release'
+
+              // promote through all 'Auto' promotion Environments
+              sh 'jx promote -b --all-auto --timeout 1h --version \$(cat ../../VERSION)'
+            }
+          }
+        }
+      }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+        failure {
+            input """Pipeline failed. 
+We will keep the build pod around to help you diagnose any failures. 
+Select Proceed or Abort to terminate the build pod"""
+        }
+    }
+  }                
