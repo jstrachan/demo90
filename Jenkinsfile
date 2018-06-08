@@ -5,6 +5,7 @@ pipeline {
     environment {
       DOCKER_REGISTRY   = "$JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST" + ":" + "$JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT"
       FOO               = "$JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST-$JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT"
+      BAR               =  env.JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST + ":" + env.JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT
       ORG               = 'jstrachan'
       APP_NAME          = 'demo90'
       CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
@@ -43,8 +44,9 @@ pipeline {
         }
         steps {
           container('maven') {
-            sh "echo DOCKER_REGISTRY = $DOCKER_REGISTRY"
+            sh "echo BAR = $BAR"
             sh "echo FOO = $FOO"
+            sh "echo DOCKER_REGISTRY = $DOCKER_REGISTRY"
               
             // ensure we're not on a detached head
             sh "git checkout master"
