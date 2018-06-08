@@ -45,7 +45,7 @@ pipeline {
         steps {
           container('maven') {
             sh 'echo DOCKER_REGISTRY = $DOCKER_REGISTRY'
-            sh 'echo DHOST = $DHOST'\
+            sh 'echo DHOST = $DHOST'
             sh 'echo BAR = $BAR'
             sh 'echo FOO = $FOO'
             sh 'echo DOCKER_REGISTRY2 = $DOCKER_REGISTRY2'
